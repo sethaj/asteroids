@@ -175,6 +175,8 @@ class Screen < JPanel
     self.repaint()
   end
   def mouseDragged e
+    @ship.move(e.getPoint())
+    self.repaint()
   end
 
   # MouseListener abstract methods
