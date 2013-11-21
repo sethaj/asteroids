@@ -29,8 +29,8 @@ class Asteroid
   end
 
   def move
-    self.xPos = self.xPos + Random.rand(15) - Random.rand(15)
-    self.yPos = self.yPos + Random.rand(15) - Random.rand(15)
+    self.xPos = self.xPos + Random.rand(16) - Random.rand(16)
+    self.yPos = self.yPos + Random.rand(16) - Random.rand(16)
   end
 end
 
@@ -138,11 +138,14 @@ class Screen < JPanel
 
     @ship = SpaceShip.new
 
-    timer = Timer.new 10, self
-    timer.start
+    @starTimer = Timer.new 10, self
+    @starTimer.start
+    @asteroidTimer = Timer.new 100, self
+    @asteroidTimer.start
 
     self.addMouseMotionListener self
     self.addMouseListener self
+
   end
 
   def paintComponent g
@@ -160,11 +163,15 @@ class Screen < JPanel
 
   # ActionListener
   def actionPerformed e
-    @stars.each do |star|
-      star.move(self.getWidth())
+    if e.getSource == @starTimer
+      @stars.each do |star|
+        star.move(self.getWidth())
+      end
     end
-    @asteroids.each do |a|
-      a.move()
+    if e.getSource == @asteroidTimer
+      @asteroids.each do |a|
+        a.move()
+      end
     end
     self.repaint()
   end
